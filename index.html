@@ -80,5 +80,39 @@
         <td>表彰、受賞歴、メディア掲載記事などあれば</td>
       </tr>
     </table>
+    let startTime = null;
+let stopTime = null;
+let seconds = null;
+let displayArea = document.getElementById('display-area');
+
+function start() {
+  displayArea.innerText = '計測中';
+  startTime = Date.now();
+}
+
+function stop() {
+  stopTime = Date.now();
+  seconds = (stopTime - startTime) / 1000;
+
+  if (9.5 <= seconds && seconds <= 10.5) {
+    displayArea.innerText = seconds + '秒でした。すごい！';
+  } else if (8.5 <= seconds && seconds < 9.5) {
+    // 8.5秒以上 9.5秒未満のとき
+    displayArea.innerText = seconds + '秒でした。惜しい！';
+    displayArea.innerText = seconds + '秒でした。残念。';
+  }
+}
+
+if (confirm('OKを押して、ちょうど10秒経ったと思ったら何かキーを押してください')) {
+  start();
+  let option = {
+    once: true
+  }
+  document.body.addEventListener(
+    'keydown',
+    stop,
+    option
+  );
+}
   </body>
 </html>
